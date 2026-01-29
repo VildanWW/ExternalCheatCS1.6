@@ -6,16 +6,17 @@ namespace ExternalCheat {
 	namespace Features {
         class Bhop : public IBaseFeature {
         private:
-            DWORD jump = 0;
-            DWORD air = 0;
+            DWORD jump;
+            DWORD air;
         public:
-            Bhop() {
-                jump = Core::clientBase + Offsets::responseJump;
-                air = Core::clientBase + Offsets::flagJump;
+            Bhop() : jump(Core::clientBase + Offsets::responseJump), air(Core::clientBase + Offsets::flagJump) {
+                bindKey = 'J';
             }
 
             void UpDate() override;
             void MenuRender() override;
+
+            ~Bhop() override = default;
         };
 	}
 }
