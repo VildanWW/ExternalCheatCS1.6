@@ -9,9 +9,7 @@ namespace ExternalCheat {
             DWORD jump;
             DWORD air;
         public:
-            Bhop() : jump(Core::clientBase + Offsets::responseJump), air(Core::clientBase + Offsets::flagJump) {
-                bindKey = 'J';
-            }
+            Bhop();
 
             void UpDate() override;
             void MenuRender() override;

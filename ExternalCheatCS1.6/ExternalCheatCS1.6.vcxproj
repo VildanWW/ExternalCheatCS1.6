@@ -128,11 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bhop.cpp" />
+    <ClCompile Include="Esp.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Memory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bhop.h" />
+    <ClInclude Include="Esp.h" />
     <ClInclude Include="IBaseFeature.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Offsets.h" />

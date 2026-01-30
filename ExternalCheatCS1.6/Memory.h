@@ -5,6 +5,7 @@ namespace ExternalCheat {
 	namespace Core {
 		inline HANDLE hProcess;
 		inline DWORD procId;
+		inline HWND hwnd;
 		inline uintptr_t clientBase;
 		inline uintptr_t hwBase;
 

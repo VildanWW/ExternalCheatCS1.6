@@ -10,11 +10,12 @@ bool ExternalCheat::Core::AttachToProcess() {
 		return false;
 	}
 
-	DWORD prId;
-	GetWindowThreadProcessId(hwnd, &prId);
+	DWORD procId;
+	GetWindowThreadProcessId(hwnd, &procId);
 
-    hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, prId);
-	procId = prId;
+    hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, procId);
+	Core::procId = procId;
+	Core::hwnd = hwnd;
 
 	return true;
 }

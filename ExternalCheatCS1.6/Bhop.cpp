@@ -1,6 +1,9 @@
 #include "Bhop.h"
 #include "Memory.h"
+#include "IBaseFeature.h"
 #include <Windows.h>
+
+ExternalCheat::Features::Bhop::Bhop() : IBaseFeature(false, true, 'J'), jump(Core::clientBase + Offsets::responseJump), air(Core::clientBase + Offsets::flagJump) {}
 
 void ExternalCheat::Features::Bhop::UpDate() {
 	if (GetAsyncKeyState(VK_SPACE)) {
