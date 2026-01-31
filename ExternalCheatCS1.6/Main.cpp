@@ -1,11 +1,12 @@
 #include <Windows.h>
 #include <vector>
+#include <thread>
 #include <memory>
 #include "Memory.h"
 #include "Bhop.h"
 #include "Esp.h"
+#include "Aim.h"
 #include "IBaseFeature.h"
-#include <thread>
 
 namespace EF = ExternalCheat::Features;
 namespace EC = ExternalCheat::Core;
@@ -20,6 +21,7 @@ int main() {
 
 	feature.push_back(std::make_unique<EF::Bhop>());
 	feature.push_back(std::make_unique<EF::Esp>());
+	feature.push_back(std::make_unique < EF::Aim>());
 
 	for (auto& f : feature) {
 		if (f->getBackGround()) {

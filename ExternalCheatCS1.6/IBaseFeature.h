@@ -2,14 +2,16 @@
 #include "Memory.h"
 #include "Offsets.h"
 #include <vector>
+#define M_PI 3.14159265358979323846f
 
 namespace ExternalCheat {
-
 	struct Vector3 { float x, y, z; };
 	struct ViewMatrix { float m[16]; };
-	struct PlayerData { Vector3 pos; int state; int team; int index; };
+	struct PlayerData { Vector3 pos; int state; int team; int index; int yaw; };
 	inline constexpr size_t countPlayers = 32;
 	inline ViewMatrix vMatrix;
+	inline Vector3 myPosition;
+	inline int lockedTargetIndex = -1;
 	inline std::vector<PlayerData> players;
 	inline unsigned char lastPulse[countPlayers] = { 0 };
 
@@ -28,9 +30,8 @@ namespace ExternalCheat {
 	inline void Update() {
 		players.clear();
 
-		Vector3 myPos;
 		uintptr_t myPosAddr = Core::hwBase + Offsets::positionPlayers - 0x1E0 + 0x70;;
-		ReadProcessMemory(Core::hProcess, (LPCVOID)myPosAddr, &myPos, 12, NULL);
+		ReadProcessMemory(Core::hProcess, (LPCVOID)myPosAddr, &myPosition, 12, NULL);
 		ReadProcessMemory(Core::hProcess, (LPCVOID)(Core::hwBase + Offsets::viewMatrix), &vMatrix, sizeof(vMatrix), NULL);
 			
 		int myState;
@@ -51,6 +52,8 @@ namespace ExternalCheat {
 			ReadProcessMemory(Core::hProcess, (LPCVOID)(Core::clientBase + Offsets::teamStatePlayers + (i * 0xC0)), &enemyTeam, 1, NULL);
 
 			if (p.state > 0 && p.pos.x != 0 && enemyTeam != myTeam) {
+				uintptr_t yawAddr = (i == 0) ? (Core::hwBase + Offsets::positionPlayers - 0x1CC + 0x4) : (Core::hwBase + Offsets::positionPlayers + (i * 0x280) + 0xA4);
+				ReadProcessMemory(Core::hProcess, (LPCVOID)yawAddr, &p.yaw, 4, NULL);
 				p.index = i;
 				players.push_back(p);
 			}

@@ -24,8 +24,6 @@ void ExternalCheat::Features::Bhop::UpDate() {
 	}
 }
 
-void ExternalCheat::Features::Bhop::MenuRender()
-{
-}
+void ExternalCheat::Features::Bhop::MenuRender() {}
 
 

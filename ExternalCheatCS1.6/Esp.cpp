@@ -5,10 +5,8 @@
 #include <d3d9.h>
 
 #pragma comment(lib, "d3d9.lib")
-#define M_PI 3.14159265358979323846f
 
 ExternalCheat::Features::Esp::Esp() : IBaseFeature(false, false, 'M') {
-
 	GetWindowRect(Core::hwnd, &gRect);
 
 	sW = gRect.right - gRect.left;
@@ -59,9 +57,7 @@ void ExternalCheat::Features::Esp::DrawEspBox(int x, int y, int w, int h, DWORD 
 	DrawLine(x + w / 2, y - h, x + w / 2, y, color);
 }
 
-void ExternalCheat::Features::Esp::MenuRender() {
-
-}
+void ExternalCheat::Features::Esp::MenuRender() {}
 
 ExternalCheat::Features::Esp::~Esp() {
 	d3dDevice->Release();
