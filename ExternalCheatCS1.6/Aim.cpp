@@ -1,6 +1,6 @@
 #include "Aim.h"
 
-ExternalCheat::Features::Aim::Aim() : IBaseFeature(false, false, 'N') {}
+ExternalCheat::Features::Aim::Aim() : IBaseFeature(false, false) {}
 
 void ExternalCheat::Features::Aim::UpDate() {
 	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000) {
@@ -15,10 +15,10 @@ void ExternalCheat::Features::Aim::UpDate() {
 
 			for (const auto& p : players) {
 				float rad = (p.yaw + 1.0f) * (M_PI / 180.0f);
-				float dX = (p.pos.x + cosf(rad) * 9.0f) - myPosition.x;
-				float dY = (p.pos.y + sinf(rad) * 9.0f) - myPosition.y;
+				float dX = (p.pos.x + cosf(rad)) - myPosition.x;
+				float dY = (p.pos.y + sinf(rad)) - myPosition.y;
 
-				float dZ = (p.pos.z + 21.5f) - (myPosition.z + 18.0f);
+				float dZ = (p.pos.z + 20.5f) - (myPosition.z + 18.0f);
 				float fDist2D = sqrtf(dX * dX + dY * dY);
 
 				float ang[2];
@@ -41,10 +41,10 @@ void ExternalCheat::Features::Aim::UpDate() {
 			for (const auto& p : players) {
 				if (p.index == lockedTargetIndex) {
 					float rad = (p.yaw + 1.0f) * (M_PI / 180.0f);
-					float dX = (p.pos.x + cosf(rad) * 9.0f) - myPosition.x;
-					float dY = (p.pos.y + sinf(rad) * 9.0f) - myPosition.y;
+					float dX = (p.pos.x + cosf(rad)) - myPosition.x;
+					float dY = (p.pos.y + sinf(rad)) - myPosition.y;
 
-					float dZ = (p.pos.z + 21.5f) - (myPosition.z + 18.0f);
+					float dZ = (p.pos.z + 20.5f) - (myPosition.z + 18.0f);
 					float fDist2D = sqrtf(dX * dX + dY * dY);
 
 					targetAng[0] = -atan2f(dZ, fDist2D) * (180.0f / M_PI);

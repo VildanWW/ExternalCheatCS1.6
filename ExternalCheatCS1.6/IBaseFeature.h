@@ -34,10 +34,10 @@ namespace ExternalCheat {
 		ReadProcessMemory(Core::hProcess, (LPCVOID)myPosAddr, &myPosition, 12, NULL);
 		ReadProcessMemory(Core::hProcess, (LPCVOID)(Core::hwBase + Offsets::viewMatrix), &vMatrix, sizeof(vMatrix), NULL);
 			
-		int myState;
+		int myState = 0;
 		ReadProcessMemory(Core::hProcess, (LPCVOID)(Core::hwBase + Offsets::myState), &myState, 4, NULL);
 		int myIndex = myState - 1;
-		int myTeam;
+		int myTeam = 0;
 		ReadProcessMemory(Core::hProcess, (LPCVOID)(Core::clientBase + Offsets::teamStatePlayers + (myIndex * 0xC0)), &myTeam, 4, NULL);
 
 		for (int i = 0; i < countPlayers; i++) {
@@ -45,13 +45,13 @@ namespace ExternalCheat {
 			if (!isPlayerActive(i)) continue;
 
 			PlayerData p;
-			int enemyTeam;
+			int enemyTeam = 0;
 
 			ReadProcessMemory(Core::hProcess, (LPCVOID)(Core::hwBase + Offsets::statePlayers + (i * 0x28)), &p.state, 4, NULL);
 			ReadProcessMemory(Core::hProcess, (LPCVOID)(Core::hwBase + Offsets::positionPlayers + (i * 0x280) + 0xA8), &p.pos, 12, NULL);
 			ReadProcessMemory(Core::hProcess, (LPCVOID)(Core::clientBase + Offsets::teamStatePlayers + (i * 0xC0)), &enemyTeam, 1, NULL);
 
-			if (p.state > 0 && p.pos.x != 0 && enemyTeam != myTeam) {
+			if (p.state > 0 && p.pos.x != 0.0f && enemyTeam != myTeam) {
 				uintptr_t yawAddr = (i == 0) ? (Core::hwBase + Offsets::positionPlayers - 0x1CC + 0x4) : (Core::hwBase + Offsets::positionPlayers + (i * 0x280) + 0xA4);
 				ReadProcessMemory(Core::hProcess, (LPCVOID)yawAddr, &p.yaw, 4, NULL);
 				p.index = i;
@@ -77,7 +77,6 @@ namespace ExternalCheat {
 		protected: 			
 			bool enabled;
 			bool backGround;
-		    int bindKey;
 		public:
 			virtual void UpDate() = 0;
 			virtual void MenuRender() = 0;
@@ -88,15 +87,15 @@ namespace ExternalCheat {
 			bool getBackGround() {
 				return backGround;
 			}
-			int getBindKey() {
-				return bindKey;
+			bool* getEnabledPtr() {
+				return &enabled;
 			}
-
+			
 			void setEnabled(bool enabled) {
 				this->enabled = enabled;
 			}
 
-			IBaseFeature(bool enabled = false, bool backGround = false, int bindKey = 0) : enabled(enabled), bindKey(bindKey), backGround(backGround) {};
+			IBaseFeature(bool enabled = false, bool backGround = false) : enabled(enabled), backGround(backGround) {};
 
 			virtual ~IBaseFeature() = default;
 		};

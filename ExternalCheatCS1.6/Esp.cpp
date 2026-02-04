@@ -6,7 +6,7 @@
 
 #pragma comment(lib, "d3d9.lib")
 
-ExternalCheat::Features::Esp::Esp() : IBaseFeature(false, false, 'M') {
+ExternalCheat::Features::Esp::Esp() : IBaseFeature(false, false) {
 	GetWindowRect(Core::hwnd, &gRect);
 
 	sW = gRect.right - gRect.left;
